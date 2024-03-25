@@ -42,6 +42,7 @@ phenomena emerge (see [1] for details).
 ## Requirements
 
 * numpy (tested with 1.26.4)
+* scipy (tested with 1.12)
 * numba (tested with 0.59)
 
 ## Usage of the macroscopic simulation method
@@ -154,6 +155,60 @@ The code above should produce the figure below.
 
 <div align="center">
   <img alt="Simulation outcome" src="./figs/macro-mean-var-dist.png"/>
+</div>
+
+## Usage of the semi-analytical (Markov chain) method
+
+This method relies on building the transition matrix (extremely time
+consuming) and then either "simulating" it for set number of steps (using
+`simulate_pmfs` function), or solving the eigenproblem to get stationary PMF
+(using `get_stationary_pmf` function). If you need, you can also obtain
+transition matrix and use it for your other purposes (use
+`make_transition_matrix` function).
+
+Code below calculates poll outcome PMFs over $1000$ steps (single step
+corresponds to single polling period). Figure of PMF evolution is then
+obtained and plotted.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import colormaps
+from mc_sim import simulate_pmfs
+from scipy.stats import betabinom
+
+# set simulation parameters
+n_steps = 1000
+
+tau = 1
+epsi_0 = 2
+epsi_1 = 2
+n_agents = 100
+
+# obtain PMF history
+history = simulate_pmfs(
+    n_steps, tau=tau, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents
+)
+
+# plot the figure
+plt.figure(figsize=(3, 2))
+plt.semilogy()
+plt.xlabel(r"$A_k$")
+plt.ylabel(r"$p(A_k)$")
+plt.ylim([1e-7, 2e1])
+for idx, h in enumerate(history):
+    plt.plot(
+        h[:, 0], h[:, 1], c=colormaps["coolwarm"](1 - (1 - idx / len(history)) ** 20)
+    )
+X = np.arange(0, n_agents + 1)
+plt.plot(X, betabinom.pmf(X, n_agents, 2 * epsi_1, 2 * epsi_0), "k--")
+plt.show()
+```
+
+The code above should produce the figure below.
+
+<div align="center">
+  <img alt="Simulation outcome" src="./figs/mc-pmf-evolution.png"/>
 </div>
 
 ## License
