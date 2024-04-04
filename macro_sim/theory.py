@@ -14,17 +14,18 @@ def get_mean(
     initial_poll: Optional[float] = None,
 ) -> np.ndarray:
     """Calculate temporal dependence of the mean."""
+    if initial_poll is None:
+        initial_poll = initial_state
+
     mean_final = get_stationary_mean(epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
     change_rate = n_agents / (epsi_0 + epsi_1 + n_agents)
     even_distance = initial_state - mean_final
-    odd_distance = 0.0
-    if initial_poll is not None:
-        odd_distance = initial_poll - mean_final
+    odd_distance = initial_poll - mean_final
     change_term = np.zeros(len(poll_ids))
     for idx, poll_idx in enumerate(poll_ids):
         if poll_idx % 2 == 0:
             change_term[idx] = even_distance * (change_rate ** (poll_idx // 2))
-        elif initial_poll is not None:
+        else:
             change_term[idx] = odd_distance * (change_rate ** ((poll_idx + 1) // 2))
     return mean_final + change_term
 
@@ -46,10 +47,12 @@ def _get_sq_mean(
     initial_poll: Optional[float] = None,
 ) -> np.ndarray:
     """Calculate temporal dependence of the mean of the square."""
+    if initial_poll is None:
+        initial_poll = initial_state
+
     epsi_sum = epsi_0 + epsi_1
 
     mean_final = get_stationary_mean(epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
-    sq_mean_first = n_agents * epsi_1 * (epsi_0 + n_agents * epsi_1) / (epsi_sum**2)
     sq_mean_final = _get_stationary_sq_mean(
         epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents, use_approximation=False
     )
@@ -58,19 +61,14 @@ def _get_sq_mean(
         * (epsi_0 - epsi_1 + n_agents * (1 + 2 * epsi_1))
         / (epsi_sum + 1)
     )
-    sq_mean_odd_mid = 0.0
-    if initial_poll is not None:
-        sq_mean_odd_mid = (
-            (initial_poll - mean_final)
-            * (epsi_0 - epsi_1 + n_agents * (1 + 2 * epsi_1))
-            / (epsi_sum + 1)
-        )
+    sq_mean_odd_mid = (
+        (initial_poll - mean_final)
+        * (epsi_0 - epsi_1 + n_agents * (1 + 2 * epsi_1))
+        / (epsi_sum + 1)
+    )
 
     even_mult = initial_state**2 - sq_mean_final - sq_mean_even_mid
-    if initial_poll is None:
-        odd_mult = sq_mean_first - sq_mean_final
-    else:
-        odd_mult = initial_poll**2 - sq_mean_final - sq_mean_odd_mid
+    odd_mult = initial_poll**2 - sq_mean_final - sq_mean_odd_mid
     mid_rate = n_agents / (epsi_sum + n_agents)
     main_rate = mid_rate * (n_agents - 1) / (epsi_sum + n_agents)
 
@@ -83,12 +81,9 @@ def _get_sq_mean(
             result[idx] = sq_mean_final + term_1 + term_2
         else:
             exp_term = (poll_idx + 1) // 2
-            if initial_poll is None:
-                result[idx] = sq_mean_final + odd_mult * (main_rate**exp_term)
-            else:
-                term_1 = odd_mult * (main_rate**exp_term)
-                term_2 = sq_mean_odd_mid * (mid_rate**exp_term)
-                result[idx] = sq_mean_final + term_1 + term_2
+            term_1 = odd_mult * (main_rate**exp_term)
+            term_2 = sq_mean_odd_mid * (mid_rate**exp_term)
+            result[idx] = sq_mean_final + term_1 + term_2
     return result
 
 

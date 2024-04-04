@@ -163,8 +163,7 @@ def generate_series(
             number of agents in state 1.
         initial_poll: (default: None)
             Previous poll results (i.e., X(-tau)). If `None` (which is the
-            default), then a warmup will be conducted. Otherwise no warmup
-            will be conducted.
+            default), then initial_poll will be set to initial_state.
         seed: (default: None)
             If number is supplied, it will be used as a seed for the random
             number generator. Due to numba limitations legacy singleton
@@ -199,24 +198,8 @@ def generate_series(
     history[0] = current_state
 
     if initial_poll is None:
-        # conduct a single warmup step
-        poll_id = 1
-        last_poll, current_state, history = __single_interval(
-            current_state,
-            history,
-            poll_id,
-            tau,
-            n_inter,
-            n_inter_offset,
-            sim_step,
-            epsi_0,
-            epsi_1,
-            n_agents,
-            sample_method,
-        )
-    else:
-        # skip warmup if initial_poll is provided
-        last_poll = initial_poll
+        initial_poll = initial_state
+    last_poll = initial_poll
 
     # main loop
     initial_poll_id = 1 + (initial_poll is None)
