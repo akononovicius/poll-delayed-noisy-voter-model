@@ -179,23 +179,26 @@ def generate_series(
 
     # prepare for the chosen sampling method
     sim_step = tau
+    store_initial = True
     if n_inter > 1:
         sample_method = SamplingMethod.oversample
         sim_step = tau / n_inter
-        history = np.zeros(n_polls * n_inter + 1)
+        history = np.zeros(n_polls * n_inter + int(store_initial))
     elif n_inter < -1:
         sample_method = SamplingMethod.undersample
         n_inter = -n_inter
-        history = np.zeros(n_polls // n_inter + 1)
+        store_initial = n_inter_offset == 0
+        history = np.zeros(n_polls // n_inter + int(store_initial))
     elif n_inter == 1:
         sample_method = SamplingMethod.propersample
-        history = np.zeros(n_polls + 1)
+        history = np.zeros(n_polls + int(store_initial))
     else:
         raise ValueError("Bad value for n_inter!")
 
     current_state: int = initial_state
     last_poll: int = -1
-    history[0] = current_state
+    if store_initial:
+        history[0] = current_state
 
     if initial_poll is None:
         initial_poll = initial_state
