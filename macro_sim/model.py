@@ -167,16 +167,16 @@ def generate_series(
             will be conducted.
         seed: (default: None)
             If number is supplied, it will be used as a seed for the random
-            number generator.
+            number generator. Due to numba limitations legacy singleton
+            RandomState is used.
 
     Output:
         Numpy array with the observed values. Note that the first value will
         always be equal to the initial condition.
     """
-    if seed is None:
-        seed = np.random.randint(2**20)
-    # can't use 'default_rng' because of numba limitations
-    np.random.seed(seed)
+    if seed is not None:
+        # can't use 'default_rng' because of numba limitations
+        np.random.seed(seed)
 
     # prepare for the chosen sampling method
     sim_step = tau
