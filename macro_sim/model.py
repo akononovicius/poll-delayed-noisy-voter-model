@@ -195,7 +195,7 @@ def generate_series(
     else:
         raise ValueError("Bad value for n_inter!")
 
-    current_state: int = initial_state
+    current_state = initial_state
     if store_initial:
         history[0] = current_state
 
