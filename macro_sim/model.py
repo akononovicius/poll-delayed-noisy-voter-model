@@ -196,7 +196,6 @@ def generate_series(
         raise ValueError("Bad value for n_inter!")
 
     current_state: int = initial_state
-    last_poll: int = -1
     if store_initial:
         history[0] = current_state
 
