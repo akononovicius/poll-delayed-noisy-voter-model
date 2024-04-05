@@ -5,7 +5,7 @@ poll-induced delays. The model itself was introduced in [1]. Here we just
 briefly discuss the differences between the "usual" noisy voter model and
 how to use our implementation.
 
-In the noisy voter model only one agent (of $N$) is allowed to change their
+In the noisy voter model only one agent (of <nobr>$N$)</nobr> is allowed to change their
 state (opinion) at any single time. Therefore the model is completely
 described by two rates: one corresponding to an agent switching from state
 "0" to state "1" (letting $X$ be the number of agents in state "1"):
@@ -18,7 +18,7 @@ $$ \lambda (X \rightarrow X - 1 )=\lambda^-=X\cdot\left[\varepsilon_0 + (N-X)\ri
 
 These rates correspond to the "non-extensive" parametrization of the noisy
 voter model. In this parametrization the model converges to a steady state
-distribution even in the thermodynamic limit ($N \rightarrow \infty$),
+distribution even in the thermodynamic limit <nobr>($N \rightarrow \infty$)</nobr>,
 instead of converging to a fixed point as is common in the existing
 literature.
 
@@ -31,9 +31,9 @@ $$ \lambda^-(t)=X(t)\cdot\left[\varepsilon_0 + \left(N-X\left(\left\lfloor\frac{
 
 In the above $\tau$ stands for both polling period, and the delay to the
 announcement of the poll outcome. So, effectively every $t=k\tau$ (with
-$k=0,1,2,\ldots$) an outcome of a previous poll $A_{k-1}$ (conducted at $t=(k-1)\tau$)
+<nobr>$k=0,1,2,\ldots$)</nobr> an outcome of a previous poll $A_{k-1}$ (conducted at <nobr>$t=(k-1)\tau$)</nobr>
 is announced to the agents, and a new poll $A_k$ is conducted (this outcome
-will be announced at $t=(k+1)\tau$).
+will be announced at <nobr>$t=(k+1)\tau$)</nobr>.
 
 It is trivial to see that for small $\tau$ the time-delayed model is
 equivalent to the original model, but for larger $\tau$ interesting
@@ -55,7 +55,7 @@ polls.
 Below you can see a sample code for a typical model run. This code simulates
 $10^3$ trajectories (which we collectively refer to as ensemble) with the
 same initial conditions and parameter sets. Every trajectory in the ensemble
-is simulated up to $k=3500$. Then the program takes ensemble mean, ensemble
+is simulated up to <nobr>$k=3500$.</nobr> Then the program takes ensemble mean, ensemble
 variance, and calculates probability mass function (both over ensemble, and
 trajectories). All numerical simulations are hidden behind `generate_series`
 function, which takes simulation parameters and initial conditions as its
