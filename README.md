@@ -1,7 +1,7 @@
 # Noisy voter model with poll-induced delays
 
 Here we share a Python implementation of a noisy voter model with
-poll-induced delays. The model itself was introduced in [1]. Here we just
+poll-induced delays. The model itself was introduced in [<a href="#ak2024">1</a>]. Here we just
 briefly discuss the differences between the "usual" noisy voter model and
 how to use our implementation.
 
@@ -37,7 +37,7 @@ will be announced at <nobr>$t=(k+1)\tau$)</nobr>.
 
 It is trivial to see that for small $\tau$ the time-delayed model is
 equivalent to the original model, but for larger $\tau$ interesting
-phenomena emerge (see [1] for details).
+phenomena emerge (see [<a href="#ak2024">1</a>] for details).
 
 ## Requirements
 
@@ -280,14 +280,14 @@ The code above should produce the figure below.
 
 ## Obtaining the scaling law
 
-In [1] we have observed that for any polling period the stationary
+In [<a href="#ak2024">1</a>] we have observed that for any polling period the stationary
 distribution of the model is well approximated by the Beta-binomial
 distribution. With the shape parameters of the distribution scaling
 according to a non-trivial law. `ar2` module contains `get_scaling_law`
 function, which calculates the law <nobr>$L(\tau)$</nobr> for the given
 model parameters. Recall that <nobr>$\hat{\alpha}(\tau) = \varepsilon\_1
 L(\tau)$</nobr> and <nobr>$\hat{\beta}(\tau) = \varepsilon\_0
-L(\tau)$</nobr> [1], so you'll have to multiply by corresponding parameter
+L(\tau)$</nobr> [<a href="#ak2024">1</a>], so you'll have to multiply by corresponding parameter
 value to get the expected shape parameter values.
 
 The code below generates two plots by relying on analytical results obtained
@@ -343,7 +343,7 @@ highly appreciated.
 
 ## References
 
-1. A. Kononovicius, R. Astrauskas, M. Radavičius, F. Ivanauskas. *Delayed
+1. <span id="ak2024"></span>A. Kononovicius, R. Astrauskas, M. Radavičius, F. Ivanauskas. *Delayed
    interactions in the noisy voter model through the periodic polling
    mechanism*. (in preparation). [arXiv:2403.10277
    [physics.soc-ph]](https://arxiv.org/abs/2403.10277).
