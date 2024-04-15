@@ -45,6 +45,15 @@ phenomena emerge (see [1] for details).
 * scipy (tested with 1.12)
 * numba (tested with 0.59)
 
+## Table of contents
+
+- [Usage of the adapted Gillespie method](#usage-of-the-adapted-gillespie-method)
+- [Usage of the macroscopic simulation method](#usage-of-the-macroscopic-simulation-method)
+- [Usage of the semi-analytical (Markov chain) method](#usage-of-the-semi-analytical-(markov-chain)-method)
+- [Obtaining the scaling law](#obtaining-the-scaling-law)
+- [License](#license)
+- [References](#references)
+
 ## Usage of the adapted Gillespie method
 
 This method follows the original Gillespie method, but modifies it to take
