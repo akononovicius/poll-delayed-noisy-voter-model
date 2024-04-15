@@ -49,7 +49,7 @@ phenomena emerge (see [1] for details).
 
 - [Usage of the adapted Gillespie method](#usage-of-the-adapted-gillespie-method)
 - [Usage of the macroscopic simulation method](#usage-of-the-macroscopic-simulation-method)
-- [Usage of the semi-analytical (Markov chain) method](#usage-of-the-semi-analytical-(markov-chain)-method)
+- [Usage of the semi-analytical (Markov chain) method](#usage-of-the-semi-analytical-markov-chain-method)
 - [Obtaining the scaling law](#obtaining-the-scaling-law)
 - [License](#license)
 - [References](#references)
