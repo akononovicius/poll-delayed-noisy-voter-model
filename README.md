@@ -45,6 +45,64 @@ phenomena emerge (see [1] for details).
 * scipy (tested with 1.12)
 * numba (tested with 0.59)
 
+## Usage of the adapted Gillespie method
+
+This method follows the original Gillespie method, but modifies it to take
+into account delays specific to the poll-delayed noisy voter model. We have
+found it to be somewhat faster than the more general next reaction method.
+
+The code below simulates and plots a sample trajectory of the poll-delayed
+model. Simulation is conducted up to the fifth poll (i.e., until
+<nobr>$t=5\tau$</nobr>), in between each poll <nobr>$100$</nobr> equidistant
+sampled values are retained.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+from gillespie_sim import generate_series
+
+# set simulation parameters
+n_polls = 5
+n_inter = 100
+
+tau = 1e-2
+epsi = 1.0
+n_agents = 100
+
+initial_state = 70
+initial_poll = 30
+
+seed = 10459
+
+# generate trajectory
+series = generate_series(
+    n_polls,
+    tau=tau,
+    n_inter=n_inter,
+    epsi_0=epsi,
+    epsi_1=epsi,
+    n_agents=n_agents,
+    initial_state=initial_state,
+    initial_poll=initial_poll,
+    seed=seed,
+)
+poll_indices = np.linspace(0, n_polls, n_polls * n_inter + 1)
+
+# plot the trajectory
+plt.figure()
+plt.xlabel(r"$t / \tau$")
+plt.ylabel(r"$X(t)$")
+plt.plot(poll_indices, series)
+plt.show()
+```
+
+The code above should produce the figure below.
+
+<div align="center">
+  <img alt="Simulation outcome" src="./figs/gillespie-trajectory.png"/>
+</div>
+
 ## Usage of the macroscopic simulation method
 
 This method was developed specifically for the poll-delayed model, it is a
