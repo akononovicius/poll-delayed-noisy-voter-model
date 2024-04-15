@@ -269,6 +269,63 @@ The code above should produce the figure below.
   <img alt="Simulation outcome" src="./figs/mc-pmf-evolution.png"/>
 </div>
 
+## Obtaining the scaling law
+
+In [1] we have observed that for any polling period the stationary
+distribution of the model is well approximated by the Beta-binomial
+distribution. With the shape parameters of the distribution scaling
+according to a non-trivial law. `ar2` module contains `get_scaling_law`
+function, which calculates the law <nobr>$L(\tau)$</nobr> for the given
+model parameters. Recall that <nobr>$\hat{\alpha}(\tau) = \varepsilon\_1
+L(\tau)$</nobr> and <nobr>$\hat{\beta}(\tau) = \varepsilon\_0
+L(\tau)$</nobr> [1], so you'll have to multiply by corresponding parameter
+value to get the expected shape parameter values.
+
+The code below generates two plots by relying on analytical results obtained
+with AR(2) approach. The left subplot shows the scaling law of the shape
+parameters, and the right subplot shows how the stationary variance scales
+with the polling period. Calculation of the stationary variance relies on
+a hidden function `_get_variance`.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+from ar2 import get_scaling_law
+from ar2.theory import _get_variance
+
+taus = np.logspace(-6, -1, 301)
+
+epsi_0 = 0.5
+epsi_1 = 2.0
+n_agents = 1000
+
+law = get_scaling_law(taus, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
+var = _get_variance(taus, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
+
+plt.figure(figsize=(6, 2))
+plt.subplot(121)
+plt.xlabel(r"$\tau$")
+plt.ylabel(r"$L(\tau)$")
+plt.semilogx()
+plt.minorticks_off()
+plt.plot(taus, law)
+plt.subplot(122)
+plt.xlabel(r"$\tau$")
+plt.ylabel(r"$\mathrm{Var}[A_\infty]$")
+plt.semilogx()
+plt.minorticks_off()
+plt.plot(taus, var)
+plt.tight_layout()
+plt.show()
+```
+
+The code above should produce the figure below.
+
+<div align="center">
+  <img alt="Simulation outcome" src="./figs/ar2-scaling-law.png"/>
+</div>
+
 ## License
 
 If you like the code presented here, you may use it for your purposes.
