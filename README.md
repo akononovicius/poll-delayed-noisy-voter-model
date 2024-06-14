@@ -291,8 +291,9 @@ a hidden function `_get_variance`.
 import matplotlib.pyplot as plt
 import numpy as np
 
-from ar2 import get_scaling_law
+from ar2 import get_scaling_law, get_alt_law
 from ar2.theory import _get_variance
+from ar2.theory_ar1 import _get_variance as _get_alt_var
 
 taus = np.logspace(-6, -1, 301)
 
@@ -303,19 +304,25 @@ n_agents = 1000
 law = get_scaling_law(taus, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
 var = _get_variance(taus, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
 
+alt_law = get_alt_law(taus, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
+alt_var = _get_alt_var(taus, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents)
+
 plt.figure(figsize=(6, 2))
 plt.subplot(121)
 plt.xlabel(r"$\tau$")
 plt.ylabel(r"$L(\tau)$")
 plt.semilogx()
 plt.minorticks_off()
-plt.plot(taus, law)
+plt.plot(taus, law, label="with delay")
+plt.plot(taus, alt_law, label="w/o delay")
+plt.legend(loc=0)
 plt.subplot(122)
 plt.xlabel(r"$\tau$")
 plt.ylabel(r"$\mathrm{Var}[A_\infty]$")
 plt.semilogx()
 plt.minorticks_off()
 plt.plot(taus, var)
+plt.plot(taus, alt_var)
 plt.tight_layout()
 plt.show()
 ```
