@@ -1,10 +1,4 @@
-from typing import TypeVar
-
-import numpy as np
-
-from .theory import _get_phi, _get_psi, _get_rho
-
-float_or_array = TypeVar("float_or_array", float, np.ndarray)
+from .shared import _get_phi, _get_psi, _get_scaling_law, float_or_array
 
 
 def _get_variance(
@@ -18,8 +12,6 @@ def _get_variance(
     phi_3 = phi_1 + (1 - phi_1) * phi_2
 
     psi_0, _, _, psi_12, psi_22 = _get_psi(tau, epsi_0, epsi_1, n_agents)
-
-    rho_1, rho_2 = _get_rho(tau, epsi_0, epsi_1, n_agents)
 
     numerator = psi_0
     denominator = 1 - phi_3**2 - psi_12 - psi_22
@@ -50,10 +42,6 @@ def get_scaling_law(
         The value(s) of the scaling law for given tau(s) and model parameters.
     """
     variance = _get_variance(tau, epsi_0, epsi_1, n_agents)
-
-    numerator = ((epsi_0 + epsi_1) ** 2) * variance
-    numerator = epsi_0 * epsi_1 * (n_agents**2) - numerator
-
-    denominator = ((epsi_0 + epsi_1) ** 3) * variance
-    denominator = denominator - epsi_0 * epsi_1 * (epsi_0 + epsi_1) * n_agents
-    return numerator / denominator
+    return _get_scaling_law(
+        tau, variance, epsi_0=epsi_0, epsi_1=epsi_1, n_agents=n_agents
+    )
