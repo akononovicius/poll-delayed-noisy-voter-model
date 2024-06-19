@@ -274,7 +274,7 @@ The code above should produce the figure below.
 In [<a href="#ak2024">1</a>] we have observed that for any polling period the stationary
 distribution of the model is well approximated by the Beta-binomial
 distribution. With the shape parameters of the distribution scaling
-according to a non-trivial law. `ar2` module contains `get_scaling_law`
+according to a non-trivial law. `ar2` module provides `get_scaling_law`
 function, which calculates the law $L(\tau)$ for the given
 model parameters. Recall that $\hat{\alpha}(\tau) = \varepsilon\_1
 L(\tau)$ and $\hat{\beta}(\tau) = \varepsilon\_0
