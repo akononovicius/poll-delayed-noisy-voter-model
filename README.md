@@ -288,10 +288,11 @@ with the polling period. Calculation of the stationary variance relies on
 a hidden function `_get_variance`.
 
 The green curve in the both plots shows analytical results obtained for
-model with no announcement delay. When there is no delay, the model is
-effectively equivalent to AR(1) process (hence the respective submodule is
-named `theory_ar1`). `get_alt_law` (provided directly by the `ar2` module)
-and `_get_alt_var` (available only from the `theory_ar1` submodule)
+model with no announcement delay. When there is no delay
+(hence the respective submodule is named `theory_no_delay`),
+the model is effectively equivalent to AR(1) process. `get_alt_law`
+(provided directly by the `ar2` module)
+and `_get_alt_var` (available only from the `theory_no_delay` submodule)
 functions are doing the respective calculations for the model with no delay.
 
 ```python
@@ -300,7 +301,7 @@ import numpy as np
 
 from ar2 import get_scaling_law, get_alt_law
 from ar2.theory import _get_variance
-from ar2.theory_ar1 import _get_variance as _get_alt_var
+from ar2.theory_no_delay import _get_variance as _get_alt_var
 
 taus = np.logspace(-6, -1, 301)
 
