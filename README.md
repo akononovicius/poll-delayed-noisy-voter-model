@@ -349,7 +349,8 @@ highly appreciated.
 
 ## References
 
-1. <span id="ak2024"></span>A. Kononovicius, R. Astrauskas, M. Radavičius, F. Ivanauskas. *Delayed
-   interactions in the noisy voter model through the periodic polling
-   mechanism*. (under review). [arXiv:2403.10277
-   [physics.soc-ph]](https://arxiv.org/abs/2403.10277).
+1. <span id="ak2024"></span>A. Kononovicius, R. Astrauskas, M. Radavičius,
+   F. Ivanauskas. *Delayed interactions in the noisy voter model through the
+   periodic polling mechanism*. Physica A **652**: 130062 (2024). [doi:
+   10.1016/j.physa.2024.130062](https://doi.org/10.1016/j.physa.2024.130062).
+   [arXiv:2403.10277 [physics.soc-ph]](https://arxiv.org/abs/2403.10277).
